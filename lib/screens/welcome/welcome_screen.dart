@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:madhack_finals/constants.dart';
 import 'package:madhack_finals/screens/welcome/components/body.dart';
 
 class WelcomeScreen extends StatelessWidget {
@@ -8,11 +7,12 @@ class WelcomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
+      resizeToAvoidBottomInset : false,
       // appBar: AppBar(
       //   title: const Text('MadHack'),
       //   backgroundColor: primaryLight,
       // ),
-      body: Body(),
+      body: SingleChildScrollView(child: Body()),
     );
   }
 }

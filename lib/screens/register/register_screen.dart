@@ -1,32 +1,30 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:madhack_finals/constants.dart';
-import 'package:madhack_finals/main.dart';
+import 'package:madhack_finals/screens/login/login_screen.dart';
 import 'package:madhack_finals/screens/login/components/background.dart';
-import 'package:madhack_finals/screens/register/register_screen.dart';
 
-import '../home/home.dart';
+import '../../main.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({Key? key}) : super(key: key);
+class RegisterScreen extends StatefulWidget {
+  const RegisterScreen({Key? key}) : super(key: key);
+
   @override
-  _LoginScreenState createState() => _LoginScreenState();
+  _RegisterScreenState createState() => _RegisterScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _RegisterScreenState extends State<RegisterScreen> {
   final _auth = FirebaseAuth.instance;
-  final loginFormKey = GlobalKey<FormState>();
+  final registerFormKey = GlobalKey<FormState>();
+  String fullName = "";
   String email = "";
   String password = "";
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
     return Scaffold(
-      resizeToAvoidBottomInset : false,
+      resizeToAvoidBottomInset: false,
       body: SingleChildScrollView(
         child: Background(
           child: Column(
@@ -34,9 +32,9 @@ class _LoginScreenState extends State<LoginScreen> {
             children: <Widget>[
               Container(
                 alignment: Alignment.centerLeft,
-                padding: const EdgeInsets.symmetric(horizontal: 30),
+                padding: const EdgeInsets.symmetric(horizontal: 40),
                 child: const Text(
-                  "LOGIN",
+                  "REGISTER",
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
                       color: Colors.blue,
@@ -44,12 +42,28 @@ class _LoginScreenState extends State<LoginScreen> {
                   textAlign: TextAlign.left,
                 ),
               ),
-              Image.asset("assets/images/login.jpg", width: size.width * 0.6),
-              // const SizedBox(height: 10),
+              SizedBox(height: size.height * 0.03),
               Form(
-                key: loginFormKey,
+                key: registerFormKey,
                 child: Column(
                   children: [
+                    Container(
+                      alignment: Alignment.center,
+                      margin: const EdgeInsets.symmetric(horizontal: 40),
+                      child: TextFormField(
+                        keyboardType: TextInputType.text,
+                        decoration: const InputDecoration(labelText: "Full Name"),
+                        validator: (value) {
+                          fullName = value!;
+                          if (fullName.isEmpty) {
+                            return "full name required";
+                          } else {
+                            return null;
+                          }
+                        },
+                      ),
+                    ),
+                    SizedBox(height: size.height * 0.03),
                     Container(
                       alignment: Alignment.center,
                       margin: const EdgeInsets.symmetric(horizontal: 40),
@@ -68,7 +82,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         },
                       ),
                     ),
-                    const SizedBox(height: 10),
+                    SizedBox(height: size.height * 0.03),
                     Container(
                       alignment: Alignment.center,
                       margin: const EdgeInsets.symmetric(horizontal: 40),
@@ -82,7 +96,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           } else if (!RegExp(
                                   r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$')
                               .hasMatch(password)) {
-                            return "invalid password";
+                            return "Password must be 8 characters long and should contain at least one uppercase letter, lowercase letter and one digit";
                           } else {
                             return null;
                           }
@@ -92,21 +106,14 @@ class _LoginScreenState extends State<LoginScreen> {
                   ],
                 ),
               ),
-              Container(
-                alignment: Alignment.centerRight,
-                margin: const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
-                child: const Text(
-                  "Forgot your password?",
-                  style: TextStyle(fontSize: 12, color: Color(0XFF2661FA)),
-                ),
-              ),
-              const SizedBox(height: 10),
+              SizedBox(height: size.height * 0.05),
               Container(
                 alignment: Alignment.center,
                 margin: const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
                 child: ElevatedButton(
                   onPressed: () async {
-                    bool isValid = loginFormKey.currentState!.validate();
+                    final isValid = registerFormKey.currentState!.validate();
+                    bool isValidUser = false;
 
                     if (!isValid) {
                       return;
@@ -120,24 +127,24 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     );
 
-                    bool isValidUser = false;
-
                     try {
-                      final user = await _auth.signInWithEmailAndPassword(
-                          email: email, password: password);
+                      final newUser = await _auth.createUserWithEmailAndPassword(
+                        email: email,
+                        password: password,
+                      );
 
-                      navigatorKey.currentState!.popUntil((route) => route.isFirst);
+                      navigatorKey.currentState!.popUntil((route) => route.isCurrent);
 
-                      if (user != null) {
-                        isValidUser = true;
+                      if (newUser != null) {
                         print("working");
+                        isValidUser = true;
                       }
-                    }
-                    on FirebaseAuthException catch (e) {
-                      navigatorKey.currentState!.popUntil((route) => route.isFirst);
+                    } on FirebaseAuthException catch (e) {
+                      navigatorKey.currentState!.popUntil((route) => route.isCurrent);
+                      print(e);
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
-                          content: const Text('Invalid username or password!'),
+                          content: const Text('A user with this email already exists!'),
                           backgroundColor: Colors.red,
                           duration: const Duration(seconds: 2),
                           action: SnackBarAction(
@@ -148,76 +155,56 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                         ),
                       );
-                      print(e);
                     }
 
-                    if (isValidUser) {
+                    if (isValidUser == true) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: const Text('Registration Successful!'),
+                          backgroundColor: Colors.green,
+                          duration: const Duration(seconds: 2),
+                          action: SnackBarAction(
+                            label: '',
+                            onPressed: () {
+                              // Some code to undo the change.
+                            },
+                          ),
+                        ),
+                      );
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => Home2(),
-                        ),
-                      );
-                    }
-                    else {
-                      navigatorKey.currentState!.popUntil((route) => route.isActive);
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: const Text('Invalid username or password!'),
-                          backgroundColor: Colors.red,
-                          duration: const Duration(seconds: 2),
-                          action: SnackBarAction(
-                            label: '',
-                            onPressed: () {
-                              // Some code to undo the change.
-                            },
-                          ),
+                          builder: (context) => LoginScreen(),
                         ),
                       );
                     }
                   },
                   style: ElevatedButton.styleFrom(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(80.0),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(80.0)),
+                      backgroundColor: Colors.blue,
+                      padding: const EdgeInsets.all(0),
+                      textStyle: const TextStyle(fontWeight: FontWeight.bold),
+                      minimumSize: Size(size.width * 0.5, 50.0)),
+                  child: const Text(
+                    "SIGN UP",
+                    style: TextStyle(
+                      fontSize: 20,
                     ),
-                    backgroundColor: Colors.blue,
-                    padding: const EdgeInsets.all(0),
-                  ),
-                  child: Container(
-                    alignment: Alignment.center,
-                    height: 50.0,
-                    width: size.width * 0.5,
-                    // decoration: BoxDecoration(
-                    //   borderRadius: BorderRadius.circular(80.0),
-                    //   gradient:
-                    //       const LinearGradient(colors: [primary, primaryLight]),
-                    // ),
-                    padding: const EdgeInsets.all(0),
-                    child: const Text(
-                      "LOGIN",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20,
-                      ),
-                    ),
+                    textAlign: TextAlign.center,
                   ),
                 ),
               ),
               Container(
                 alignment: Alignment.centerRight,
-                margin: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+                margin: const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
                 child: GestureDetector(
                   onTap: () => {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => RegisterScreen(),
-                      ),
-                    ),
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => LoginScreen()))
                   },
                   child: const Text(
-                    "Don't Have an Account? Sign up",
+                    "Already Have an Account? Sign in",
                     style: TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.bold,
