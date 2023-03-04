@@ -42,6 +42,12 @@ class _AddAnnouncementState extends State<AddAnnouncement> {
             ),
             const SizedBox(height: 20),
             TextFormField(
+              validator: (value){
+                if (value == null || value.isEmpty){
+                  return "Invalid value Pls try again";
+                }
+                return null;
+              },
               controller: _title,
               decoration: const InputDecoration(
                 border: OutlineInputBorder(),
@@ -50,6 +56,12 @@ class _AddAnnouncementState extends State<AddAnnouncement> {
             ),
             const SizedBox(height: 20),
             TextFormField(
+              validator: (value){
+                if (value == null || value.isEmpty){
+                  return "Invalid value Pls try again";
+                }
+                return null;
+              },
               controller: _subtitle,
               decoration: const InputDecoration(
                 border: OutlineInputBorder(
@@ -60,6 +72,12 @@ class _AddAnnouncementState extends State<AddAnnouncement> {
             ),
             const SizedBox(height: 20),
             TextFormField(
+              validator: (value){
+                if (value == null || value.isEmpty){
+                  return "Invalid value Pls try again";
+                }
+                return null;
+              },
               controller: _description,
               decoration: const InputDecoration(
                 border: OutlineInputBorder(),
