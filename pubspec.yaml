@@ -32,8 +32,6 @@ dependencies:
     sdk: flutter
   intl: ^0.17.0
   syncfusion_flutter_calendar: ^19.3.56-beta
-
-
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
@@ -41,6 +39,7 @@ dependencies:
   firebase_core: ^2.7.0
   firebase_database: ^10.0.14
   firebase_auth: ^4.2.9
+  time_picker_widget: ^1.0.0+10
 
 dev_dependencies:
   flutter_test:
