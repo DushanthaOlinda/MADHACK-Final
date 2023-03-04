@@ -1,8 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:madhack_finals/components/card.dart';
+import 'package:syncfusion_flutter_calendar/calendar.dart';
 
 import '../../components/add_announcement.dart';
+import '../login/login_screen.dart';
 
 class Home2 extends StatefulWidget {
   const Home2({Key? key}) : super(key: key);
@@ -119,18 +121,10 @@ class _HomeState extends State<Home2> {
             children: [
               UserAccountsDrawerHeader(
                 accountEmail: Text(userEmail),
-                accountName: Text("Admin"),
-                currentAccountPicture: CircleAvatar(
+                accountName: const Text("Admin"),
+                currentAccountPicture: const CircleAvatar(
                   backgroundImage: AssetImage("assets/images/bug.png"),
                 ),
-                otherAccountsPictures: [
-                  CircleAvatar(
-                    backgroundImage: AssetImage("assets/images/bug.png"),
-                  ),
-                  CircleAvatar(
-                    backgroundImage: AssetImage("assets/images/bug.png"),
-                  )
-                ],
               ),
               ListTile(
                 leading: const Icon(Icons.home),
@@ -155,30 +149,11 @@ class _HomeState extends State<Home2> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => LoginScreen(),
+                      builder: (context) => const LoginScreen(),
                     ),
                   );
                 },
               ),
-              // const Padding(
-              //   padding: EdgeInsets.all(14.0),
-              //   child: Text("Labels"),
-              // ),
-              // ListTile(
-              //   leading: const Icon(Icons.label),
-              //   title: const Text("Red"),
-              //   onTap: () {},
-              // ),
-              // ListTile(
-              //   leading: const Icon(Icons.label),
-              //   title: const Text("Blue"),
-              //   onTap: () {},
-              // ),
-              // ListTile(
-              //   leading: const Icon(Icons.label),
-              //   title: const Text("Green"),
-              //   onTap: () {},
-              // ),
             ],
           )),
       body: ListView.builder(

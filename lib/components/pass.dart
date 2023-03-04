@@ -28,6 +28,10 @@ class Pass extends StatelessWidget {
             leading: const Icon(Icons.account_balance_wallet_outlined),
             title: Text(announcementDetails.description),
           ),
+          ListTile(
+            leading: const Icon(Icons.account_balance_wallet_outlined),
+            title: Text(announcementDetails.formattedDate.toString()),
+          ),
         ]),
       ),
     );
