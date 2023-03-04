@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:madhack_finals/screens/home/home.dart';
 import 'firebase_options.dart';
 
 import 'package:madhack_finals/constants.dart';
 import 'package:madhack_finals/screens/welcome/welcome_screen.dart';
 
 
-void main() {
+Future main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(const MyApp());
 }
 
@@ -24,7 +27,7 @@ class MyApp extends StatelessWidget {
         primaryColorLight: primaryLight,
         scaffoldBackgroundColor: Colors.white
       ),
-      home: const WelcomeScreen(),
+      home: const Home2(),
     );
   }
 }
