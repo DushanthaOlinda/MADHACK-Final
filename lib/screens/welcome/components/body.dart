@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:madhack_finals/constants.dart';
+import 'package:madhack_finals/screens/home/home.dart';
 
 class Body extends StatelessWidget {
   const Body({Key? key}) : super(key: key);
@@ -10,12 +11,12 @@ class Body extends StatelessWidget {
     return Container(
       width: double.infinity,
       height: size.height,
-      // decoration: const BoxDecoration(
-      //   image: DecorationImage(
-      //     image: AssetImage("assets/images/bg.png"),
-      //     fit: BoxFit.cover,
-      //   ),
-      // ),
+      decoration: const BoxDecoration(
+        image: DecorationImage(
+          image: AssetImage("assets/images/bg2.png"),
+          fit: BoxFit.cover,
+        ),
+      ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
@@ -43,7 +44,9 @@ class Body extends StatelessWidget {
                 foregroundColor: primaryLight,
                 backgroundColor: primaryLight,
               ),
-              onPressed: null,
+              onPressed: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context)=> const Home2()));
+              },
               child: const Text(
                 "LOGIN",
                 style: TextStyle(
