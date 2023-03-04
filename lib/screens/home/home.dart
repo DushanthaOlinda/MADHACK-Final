@@ -24,7 +24,7 @@ class _HomeState extends State<Home2> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           // push to the add announcement page
@@ -34,9 +34,9 @@ class _HomeState extends State<Home2> {
               builder: (context) => const AddAnnouncement(),
             ),);
         },
-        backgroundColor: Colors.black87,
-        foregroundColor: Colors.blue,
-        elevation: 0,
+        foregroundColor: Colors.black87,
+        backgroundColor: Colors.blue,
+        elevation: 2,
         // shape: BeveledRectangleBorder(
         //   borderRadius: BorderRadius.circular(20.0),
         //   side: const BorderSide(color: Colors.blue, width: 2.0,style: BorderStyle.solid),
@@ -44,40 +44,35 @@ class _HomeState extends State<Home2> {
         // mini: true,
         child: const Icon(Icons.add),
       ),
-      bottomNavigationBar: BottomAppBar(
-        notchMargin: 5.0,
-        color: Colors.black87,
-        elevation: 0,
-        shape: const CircularNotchedRectangle(),
-        child: SizedBox(
-          height: 50.0,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              IconButton(
-                onPressed: () {},
-                icon: const Icon(Icons.home),
-                color: Colors.blue,
-              ),
-              IconButton(
-                onPressed: () {},
-                icon: const Icon(Icons.search),
-                color: Colors.white,
-              ),
-              IconButton(
-                onPressed: () {},
-                icon: const Icon(Icons.shopping_cart),
-                color: Colors.white,
-              ),
-              IconButton(
-                onPressed: () {},
-                icon: const Icon(Icons.person),
-                color: Colors.white,
-              ),
-            ],
-          ),
-        ),
-      ),
+      // bottomNavigationBar: BottomAppBar(
+      //   notchMargin: 5.0,
+      //   color: Colors.black87,
+      //   elevation: 0,
+      //   shape: const CircularNotchedRectangle(),
+      //   child: SizedBox(
+      //     height: 50.0,
+      //     child: Row(
+      //       mainAxisAlignment: MainAxisAlignment.spaceAround,
+      //       children: [
+      //         IconButton(
+      //           onPressed: () {},
+      //           icon: const Icon(Icons.home),
+      //           color: Colors.blue,
+      //         ),
+      //         IconButton(
+      //           onPressed: () {},
+      //           icon: const Icon(Icons.search),
+      //           color: Colors.white,
+      //         ),
+      //         IconButton(
+      //           onPressed: () {},
+      //           icon: const Icon(Icons.person),
+      //           color: Colors.white,
+      //         ),
+      //       ],
+      //     ),
+      //   ),
+      // ),
       extendBodyBehindAppBar: true,
       appBar: AppBar(
         // leading: IconButton(
@@ -86,10 +81,6 @@ class _HomeState extends State<Home2> {
         // ),
         title: const Text("Announcements"),
         actions: const [
-          IconButton(
-            icon: Icon(Icons.shopping_cart),
-            onPressed: null,
-          ),
           IconButton(
             icon: Icon(Icons.search),
             onPressed: null,
@@ -142,11 +133,6 @@ class _HomeState extends State<Home2> {
               ListTile(
                 leading: const Icon(Icons.home),
                 title: const Text("Home"),
-                onTap: () {},
-              ),
-              ListTile(
-                leading: const Icon(Icons.shopping_cart),
-                title: const Text("Cart"),
                 onTap: () {},
               ),
               ListTile(
