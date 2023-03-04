@@ -63,7 +63,7 @@ class Body extends StatelessWidget {
               ),
               onPressed: () {
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => const LoginScreen()));
+                    MaterialPageRoute(builder: (context) => LoginScreen()));
               },
               child: const Text(
                 "LOGIN",
@@ -91,7 +91,7 @@ class Body extends StatelessWidget {
               ),
               onPressed: () {
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => const RegisterScreen()));
+                    MaterialPageRoute(builder: (context) => RegisterScreen()));
               },
               child: const Text(
                 "SIGNUP",
