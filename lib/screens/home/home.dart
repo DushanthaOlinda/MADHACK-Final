@@ -49,7 +49,7 @@ class _HomeState extends State<Home2> {
         color: Colors.black87,
         elevation: 0,
         shape: const CircularNotchedRectangle(),
-        child: Container(
+        child: SizedBox(
           height: 50.0,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
