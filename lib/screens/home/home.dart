@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:madhack_finals/components/card.dart';
 
@@ -22,6 +23,9 @@ class _HomeState extends State<Home2> {
 
   @override
   Widget build(BuildContext context) {
+    final loggedInUser = FirebaseAuth.instance.currentUser!;
+    String userEmail = loggedInUser.email!;
+
     return Scaffold(
       backgroundColor: Colors.white,
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
@@ -87,21 +91,21 @@ class _HomeState extends State<Home2> {
         title: const Text("Announcements"),
         actions: const [
           IconButton(
-            icon: Icon(Icons.shopping_cart),
+            icon: Icon(Icons.menu_book),
+            onPressed: null,
+          ),
+          IconButton(
+            icon: Icon(Icons.edit_document),
             onPressed: null,
           ),
           IconButton(
             icon: Icon(Icons.search),
             onPressed: null,
           ),
-          IconButton(
-            icon: Icon(Icons.menu_book),
-            onPressed: null,
-          ),
         ],
         elevation: 0,
         centerTitle: true,
-        backgroundColor: Colors.blue.withOpacity(0.7),
+        backgroundColor: Colors.blue,
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.vertical(
             bottom: Radius.circular(20),
@@ -114,23 +118,12 @@ class _HomeState extends State<Home2> {
           child: ListView(
             children: [
               UserAccountsDrawerHeader(
-                accountEmail: const Text("dushanthaolinda29@gmail.com"),
-                accountName: Padding(
-                  padding: const EdgeInsets.only(top: 20.0),
-                  child: Row(
-                    children: const [
-                      Text("Dushantha Olinda"),
-                      Padding(
-                        padding: EdgeInsets.only(left: 120.0),
-                        child: Text("Admin"),
-                      ),
-                    ],
-                  ),
-                ),
-                currentAccountPicture: const CircleAvatar(
+                accountEmail: Text(userEmail),
+                accountName: Text("Admin"),
+                currentAccountPicture: CircleAvatar(
                   backgroundImage: AssetImage("assets/images/bug.png"),
                 ),
-                otherAccountsPictures: const [
+                otherAccountsPictures: [
                   CircleAvatar(
                     backgroundImage: AssetImage("assets/images/bug.png"),
                   ),
@@ -145,8 +138,8 @@ class _HomeState extends State<Home2> {
                 onTap: () {},
               ),
               ListTile(
-                leading: const Icon(Icons.shopping_cart),
-                title: const Text("Cart"),
+                leading: const Icon(Icons.date_range_rounded),
+                title: const Text("Schedule"),
                 onTap: () {},
               ),
               ListTile(
@@ -154,25 +147,38 @@ class _HomeState extends State<Home2> {
                 title: const Text("Profile"),
                 onTap: () {},
               ),
-              const Padding(
-                padding: EdgeInsets.all(14.0),
-                child: Text("Labels"),
-              ),
               ListTile(
-                leading: const Icon(Icons.label),
-                title: const Text("Red"),
-                onTap: () {},
+                leading: const Icon(Icons.exit_to_app),
+                title: const Text("Logout"),
+                onTap: () {
+                  FirebaseAuth.instance.signOut();
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => LoginScreen(),
+                    ),
+                  );
+                },
               ),
-              ListTile(
-                leading: const Icon(Icons.label),
-                title: const Text("Blue"),
-                onTap: () {},
-              ),
-              ListTile(
-                leading: const Icon(Icons.label),
-                title: const Text("Green"),
-                onTap: () {},
-              ),
+              // const Padding(
+              //   padding: EdgeInsets.all(14.0),
+              //   child: Text("Labels"),
+              // ),
+              // ListTile(
+              //   leading: const Icon(Icons.label),
+              //   title: const Text("Red"),
+              //   onTap: () {},
+              // ),
+              // ListTile(
+              //   leading: const Icon(Icons.label),
+              //   title: const Text("Blue"),
+              //   onTap: () {},
+              // ),
+              // ListTile(
+              //   leading: const Icon(Icons.label),
+              //   title: const Text("Green"),
+              //   onTap: () {},
+              // ),
             ],
           )),
       body: ListView.builder(
