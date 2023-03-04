@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:madhack_finals/components/card.dart';
 
+import '../../components/add_announcement.dart';
+
 class Home2 extends StatefulWidget {
   const Home2({Key? key}) : super(key: key);
 
@@ -24,7 +26,14 @@ class _HomeState extends State<Home2> {
       backgroundColor: Colors.white,
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          // push to the add announcement page
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const AddAnnouncement(),
+            ),);
+        },
         backgroundColor: Colors.black87,
         foregroundColor: Colors.blue,
         elevation: 0,
