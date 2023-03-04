@@ -1,23 +1,95 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'firebase_options.dart';
 
-class Home2 extends StatefulWidget {
-  const Home2({Key? key}) : super(key: key);
+
+class AddSubjectPage extends StatefulWidget {
   @override
-  State<Home2> createState() => _HomeState();
+  _AddSubjectPageState createState() => _AddSubjectPageState();
 }
 
-  class _HomeState extends State<Home2> {
-  List<String> products = ["Bed", "Sofa", "Chair"];
-
-  List<String> productDetails = [
-  "King Size Bed",
-  "King SIe Sofa",
-  "Wooden Chair"
-  ];
-
-  List<int> price = [3000, 2500, 1860];
+class _AddSubjectPageState extends State<AddSubjectPage> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _imageUrlController = TextEditingController();
+  final TextEditingController _descriptionController =
+  TextEditingController();
 
   @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Add Subject'),
+      ),
+      body: Container(
+        padding: EdgeInsets.all(16.0),
+        child: Form(
+          key: _formKey,
+          child: Column(
+            children: <Widget>[
+              TextFormField(
+                controller: _nameController,
+                decoration: InputDecoration(
+                  labelText: 'Subject Name',
+                ),
+                validator: (value) {
+                  if (value.isEmpty) {
+                    return 'Please enter a subject name';
+                  }
+                  return null;
+                },
+              ),
+              TextFormField(
+                controller: _imageUrlController,
+                decoration: InputDecoration(
+                  labelText: 'Image URL',
+                ),
+                validator: (value) {
+                  if (value.isEmpty) {
+                    return 'Please enter an image URL';
+                  }
+                  return null;
+                },
+              ),
+              TextFormField(
+                controller: _descriptionController,
+                decoration: InputDecoration(
+                  labelText: 'Description',
+                ),
+                validator: (value) {
+                  if (value.isEmpty) {
+                    return 'Please enter a description';
+                  }
+                  return null;
+                },
+              ),
+              RaisedButton(
+                child: Text('Save'),
+                onPressed: () async {
+                  if (_formKey.currentState.validate()) {
+                    final subject = {
+                      'name': _nameController.text,
+                      'image': _imageUrlController.text,
+                      'description': _descriptionController.text,
+                    };
+                    await FirebaseFirestore.instance
+                        .collection('subjects')
+                        .add(subject);
+                    Navigator.pop(context);
+                  }
+                },
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+
+
+@override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.amber,
@@ -75,20 +147,6 @@ class Home2 extends StatefulWidget {
         //   onPressed: () {},
         // ),
         title: const Text("Home"),
-        actions: const [
-          IconButton(
-            icon: Icon(Icons.shopping_cart),
-            onPressed: null,
-          ),
-          IconButton(
-            icon: Icon(Icons.search),
-            onPressed: null,
-          ),
-          IconButton(
-            icon: Icon(Icons.menu_book),
-            onPressed: null,
-          ),
-        ],
         elevation: 0,
         centerTitle: true,
         backgroundColor: Colors.purple.withOpacity(0.7),

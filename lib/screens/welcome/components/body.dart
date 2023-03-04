@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:madhack_finals/constants.dart';
 import 'package:madhack_finals/screens/home/home.dart';
+import 'package:madhack_finals/screens/home/home2.dart';
 
 class Body extends StatelessWidget {
   const Body({Key? key}) : super(key: key);
@@ -45,7 +46,7 @@ class Body extends StatelessWidget {
                 backgroundColor: primaryLight,
               ),
               onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context)=> const Home2()));
+                Navigator.push(context, MaterialPageRoute(builder: (context)=> HomePage()));
               },
               child: const Text(
                 "LOGIN",
