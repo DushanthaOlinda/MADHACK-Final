@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "493078221874",
+    "project_id": "kuppi-buddy",
+    "storage_bucket": "kuppi-buddy.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:493078221874:android:7793b96a89d2081117982b",
+        "android_client_info": {
+          "package_name": "com.example.madhack_finals"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "493078221874-edi34mrmc5hhpebku32b2gimicg1agfj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDtcV80gv7v1Qs2CF6HcPTZkL1Bv8oghww"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "493078221874-edi34mrmc5hhpebku32b2gimicg1agfj.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "493078221874-ektbbsq8aboqeqmhf9a2dg8lsprd3j5c.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.madhackFinals"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
