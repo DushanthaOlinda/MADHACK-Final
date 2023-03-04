@@ -1,4 +1,6 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:madhack_finals/components/pass.dart';
 
 class AddAnnouncement extends StatefulWidget {
@@ -30,7 +32,6 @@ class _AddAnnouncementState extends State<AddAnnouncement> {
   final _subtitle = TextEditingController();
   final _description = TextEditingController();
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -53,6 +54,12 @@ class _AddAnnouncementState extends State<AddAnnouncement> {
             ),
             const SizedBox(height: 20),
             TextFormField(
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return "Invalid value Pls try again";
+                }
+                return null;
+              },
               controller: _title,
               decoration: const InputDecoration(
                 border: OutlineInputBorder(),
@@ -61,6 +68,12 @@ class _AddAnnouncementState extends State<AddAnnouncement> {
             ),
             const SizedBox(height: 20),
             TextFormField(
+              validator: (value){
+              if (value == null || value.isEmpty){
+                return "Invalid value Pls try again";
+              }
+              return null;
+            },
               controller: _subtitle,
               decoration: const InputDecoration(
                 border: OutlineInputBorder(
@@ -71,6 +84,12 @@ class _AddAnnouncementState extends State<AddAnnouncement> {
             ),
             const SizedBox(height: 20),
             TextFormField(
+              validator: (value){
+                if (value == null || value.isEmpty){
+                  return "Invalid value Pls try again";
+                }
+                return null;
+              },
               controller: _description,
               decoration: const InputDecoration(
                 border: OutlineInputBorder(),
@@ -132,12 +151,9 @@ class _AddAnnouncementState extends State<AddAnnouncement> {
                   if (kDebugMode) {
                     print(pickedTime);
                   }
-                  String formattedTime =
-                      TimeOfDay(hour: pickedTime.hour, minute: pickedTime.minute)
-                          .format(context);
+                  String formattedTime = TimeOfDay(hour: pickedTime.hour, minute: pickedTime.minute).format(context);
                   if (kDebugMode) {
-                    print(
-                        formattedTime);
+                    print(formattedTime);
                     setState(() {
                       timeInput.text =
                           formattedTime; //set output date to TextField value.
