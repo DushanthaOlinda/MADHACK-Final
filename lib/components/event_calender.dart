@@ -14,6 +14,16 @@ class EventCalender extends StatelessWidget {
         body: SfCalendar(
           view: CalendarView.month,
           showDatePickerButton: true,
+          allowViewNavigation: true,
+          allowedViews: const <CalendarView>
+          [
+            CalendarView.day,
+            CalendarView.week,
+            CalendarView.workWeek,
+            CalendarView.month,
+            CalendarView.schedule
+          ],
+          viewNavigationMode: ViewNavigationMode.snap,
           dataSource: MeetingDataSource(_getDataSource()),
           monthViewSettings: const MonthViewSettings(
               appointmentDisplayMode: MonthAppointmentDisplayMode.appointment),
