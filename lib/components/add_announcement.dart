@@ -1,4 +1,6 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:madhack_finals/components/pass.dart';
 
 class AddAnnouncement extends StatefulWidget {
@@ -9,8 +11,18 @@ class AddAnnouncement extends StatefulWidget {
 }
 
 class _AddAnnouncementState extends State<AddAnnouncement> {
-  _AddAnnouncementState(){
+  _AddAnnouncementState() {
     _announcementDetails = AnnouncementDetails();
+  }
+
+  TextEditingController dateInput = TextEditingController();
+  TextEditingController timeInput = TextEditingController();
+
+  @override
+  void initState() {
+    dateInput.text = ""; //set the initial value of text field
+    timeInput.text = "";
+    super.initState();
   }
 
   late AnnouncementDetails _announcementDetails;
@@ -20,7 +32,6 @@ class _AddAnnouncementState extends State<AddAnnouncement> {
   final _subtitle = TextEditingController();
   final _description = TextEditingController();
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,65 +40,148 @@ class _AddAnnouncementState extends State<AddAnnouncement> {
         title: const Text('Add Announcement'),
         backgroundColor: Colors.black87,
       ),
-      body: SingleChildScrollView(
-        child: Form(
-          key: _formKey,
-          child: Column(
-            children: [
-              const SizedBox(height: 20),
-              const Text(
-                'Add Announcement',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
+      body: Form(
+        key: _formKey,
+        child: Column(
+          children: [
+            const SizedBox(height: 20),
+            const Text(
+              'Add Announcement',
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
               ),
-              const SizedBox(height: 20),
-              TextFormField(
-                controller: _title,
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'Title',
-                ),
+            ),
+            const SizedBox(height: 20),
+            TextFormField(
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return "Invalid value Pls try again";
+                }
+                return null;
+              },
+              controller: _title,
+              decoration: const InputDecoration(
+                border: OutlineInputBorder(),
+                labelText: 'Title',
               ),
-              const SizedBox(height: 20),
-              TextFormField(
-                controller: _subtitle,
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.black),
+            ),
+            const SizedBox(height: 20),
+            TextFormField(
+              validator: (value){
+              if (value == null || value.isEmpty){
+                return "Invalid value Pls try again";
+              }
+              return null;
+            },
+              controller: _subtitle,
+              decoration: const InputDecoration(
+                border: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.black),
+                ),
+                labelText: 'Subtitle',
+              ),
+            ),
+            const SizedBox(height: 20),
+            TextFormField(
+              validator: (value){
+                if (value == null || value.isEmpty){
+                  return "Invalid value Pls try again";
+                }
+                return null;
+              },
+              controller: _description,
+              decoration: const InputDecoration(
+                border: OutlineInputBorder(),
+                labelText: 'Description',
+              ),
+            ),
+            const SizedBox(height: 20),
+            TextField(
+              controller: dateInput,
+              //editing controller of this TextField
+              decoration: const InputDecoration(
+                  icon: Icon(Icons.calendar_today), //icon of text field
+                  labelText: "Enter Date" //label text of field
                   ),
-                  labelText: 'Subtitle',
-                ),
-              ),
-              const SizedBox(height: 20),
-              TextFormField(
-                controller: _description,
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'Description',
-                ),
-              ),
-              const SizedBox(height: 20),
-              OutlinedButton(
-                onPressed:(){
-                  if (_formKey.currentState!.validate()) {
-                    AnnouncementDetails announcementDetails = AnnouncementDetails();
-                    announcementDetails.title = _title.text;
-                    announcementDetails.subtitle = _subtitle.text;
-                    announcementDetails.description = _description.text;
+              readOnly: true,
+              //set it true, so that user will not able to edit text
+              onTap: () async {
+                DateTime? pickedDate = await showDatePicker(
+                    context: context,
+                    initialDate: DateTime.now(),
+                    firstDate: DateTime(1950),
+                    //DateTime.now() - not to allow to choose before today.
+                    lastDate: DateTime(2100));
 
-                    Navigator.push(
-                        context, MaterialPageRoute(builder: (context) {
-                      return Pass( announcementDetails: announcementDetails);
-                    })
-                    );
+                if (pickedDate != null) {
+                  if (kDebugMode) {
+                    print(pickedDate);
+                  } //pickedDate output format => 2021-03-10 00:00:00.000
+                  String formattedDate =
+                      DateFormat('yyyy-MM-dd').format(pickedDate);
+                  if (kDebugMode) {
+                    print(
+                        formattedDate); //formatted date output using intl package =>  2021-03-16
+                    setState(() {
+                      dateInput.text =
+                          formattedDate; //set output date to TextField value.
+                    });
+                  } else {}
+                }
+              },
+            ),
+            const SizedBox(height: 20),
+            TextField(
+              controller: timeInput,
+              //editing controller of this TextField
+              decoration: const InputDecoration(
+                  icon: Icon(Icons.access_time), //icon of text field
+                  labelText: "Enter Time" //label text of field
+                  ),
+              readOnly: true,
+              //set it true, so that user will not able to edit text
+              onTap: () async {
+                TimeOfDay? pickedTime = await showTimePicker(
+                  context: context,
+                  initialTime: TimeOfDay.now(),
+                );
+
+                if (pickedTime != null) {
+                  if (kDebugMode) {
+                    print(pickedTime);
                   }
-                },
-                child: const Text('Add Announcement'),
-              ),
-            ],
-          ),
+                  String formattedTime = TimeOfDay(hour: pickedTime.hour, minute: pickedTime.minute).format(context);
+                  if (kDebugMode) {
+                    print(formattedTime);
+                    setState(() {
+                      timeInput.text =
+                          formattedTime; //set output date to TextField value.
+                    });
+                  } else {}
+                }
+              },
+            ),
+            const SizedBox(height: 20),
+            OutlinedButton(
+              onPressed: () {
+                if (_formKey.currentState!.validate()) {
+                  AnnouncementDetails announcementDetails =
+                      AnnouncementDetails();
+                  announcementDetails.title = _title.text;
+                  announcementDetails.subtitle = _subtitle.text;
+                  announcementDetails.description = _description.text;
+                  announcementDetails.formattedDate = dateInput.text;
+                  announcementDetails.formattedTime = timeInput.text;
+
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return Pass(announcementDetails: announcementDetails);
+                  }));
+                }
+              },
+              child: const Text('Add Announcement'),
+            ),
+          ],
         ),
       ),
     );
@@ -98,4 +192,6 @@ class AnnouncementDetails {
   late String title;
   late String subtitle;
   late String description;
+  late String formattedDate;
+  late String formattedTime;
 }
