@@ -20,12 +20,12 @@ class Home2 extends StatefulWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.amber,
+      backgroundColor: Colors.white,
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
         onPressed: () {},
         backgroundColor: Colors.black87,
-        foregroundColor: Colors.yellow,
+        foregroundColor: Colors.blue,
         elevation: 0,
         // shape: BeveledRectangleBorder(
         //   borderRadius: BorderRadius.circular(20.0),
@@ -47,7 +47,7 @@ class Home2 extends StatefulWidget {
               IconButton(
                 onPressed: () {},
                 icon: const Icon(Icons.home),
-                color: Colors.yellow,
+                color: Colors.blue,
               ),
               IconButton(
                 onPressed: () {},
@@ -91,7 +91,7 @@ class Home2 extends StatefulWidget {
         ],
         elevation: 0,
         centerTitle: true,
-        backgroundColor: Colors.purple.withOpacity(0.7),
+        backgroundColor: Colors.blue.withOpacity(0.7),
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.vertical(
             bottom: Radius.circular(20),
@@ -103,13 +103,24 @@ class Home2 extends StatefulWidget {
           elevation: 140.0,
           child: ListView(
             children: [
-              const UserAccountsDrawerHeader(
-                accountEmail: Text("dushanthaolinda29@gmail.com"),
-                accountName: Text("Dushantha Olinda"),
-                currentAccountPicture: CircleAvatar(
+              UserAccountsDrawerHeader(
+                accountEmail: const Text("dushanthaolinda29@gmail.com"),
+                accountName: Padding(
+                  padding: const EdgeInsets.only(top: 20.0),
+                  child: Row(
+                    children: const [
+                      Text("Dushantha Olinda"),
+                      Padding(
+                        padding: EdgeInsets.only(left: 120.0),
+                        child: Text("Admin"),
+                      ),
+                    ],
+                  ),
+                ),
+                currentAccountPicture: const CircleAvatar(
                   backgroundImage: AssetImage("assets/images/bug.png"),
                 ),
-                otherAccountsPictures: [
+                otherAccountsPictures: const [
                   CircleAvatar(
                     backgroundImage: AssetImage("assets/images/bug.png"),
                   ),
