@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:madhack_finals/screens/login/login_screen.dart';
 import 'package:madhack_finals/screens/login/components/background.dart';
 
+import '../../main.dart';
+
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({Key? key}) : super(key: key);
 
@@ -108,55 +110,71 @@ class _RegisterScreenState extends State<RegisterScreen> {
               margin: const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
               child: ElevatedButton(
                 onPressed: () async {
+                  final isValid = registerFormKey.currentState!.validate();
+                  bool isValidUser = false;
 
-                  if (registerFormKey.currentState!.validate()) {
-                    bool isValidUser = false;
-                    try {
-                      final newUser =
-                          await _auth.createUserWithEmailAndPassword(
-                              email: email, password: password);
+                  if (!isValid) {
+                    return;
+                  }
 
-                      if (newUser != null) {
-                        print("working");
-                        isValidUser = true;
-                      }
-                    } catch (e) {
-                      print(e);
+                  showDialog(
+                    context: context,
+                    barrierDismissible: false,
+                    builder: (context) => const Center(
+                      child: CircularProgressIndicator(),
+                    ),
+                  );
+
+                  try {
+                    final newUser = await _auth.createUserWithEmailAndPassword(
+                      email: email,
+                      password: password,
+                    );
+
+                    navigatorKey.currentState!.popUntil((route) => route.isCurrent);
+
+                    if (newUser != null) {
+                      print("working");
+                      isValidUser = true;
                     }
+                  } on FirebaseAuthException catch (e) {
+                    navigatorKey.currentState!.popUntil((route) => route.isCurrent);
+                    print(e);
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: const Text('A user with this email already exists!'),
+                        backgroundColor: Colors.red,
+                        duration: const Duration(seconds: 2),
+                        action: SnackBarAction(
+                          label: '',
+                          onPressed: () {
+                            // Some code to undo the change.
+                          },
+                        ),
+                      ),
+                    );
+                  }
 
-                    if (isValidUser == true) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: const Text('Successfully logged in!'),
-                          duration: const Duration(seconds: 2),
-                          action: SnackBarAction(
-                            label: '',
-                            onPressed: () {
-                              // Some code to undo the change.
-                            },
-                          ),
+                  if (isValidUser == true) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: const Text('Registration Successful!'),
+                        backgroundColor: Colors.green,
+                        duration: const Duration(seconds: 2),
+                        action: SnackBarAction(
+                          label: '',
+                          onPressed: () {
+                            // Some code to undo the change.
+                          },
                         ),
-                      );
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => LoginScreen(),
-                        ),
-                      );
-                    } else {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: const Text('Registration failed! Try again'),
-                          duration: const Duration(seconds: 2),
-                          action: SnackBarAction(
-                            label: '',
-                            onPressed: () {
-                              // Some code to undo the change.
-                            },
-                          ),
-                        ),
-                      );
-                    }
+                      ),
+                    );
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => LoginScreen(),
+                      ),
+                    );
                   }
                 },
                 style: ElevatedButton.styleFrom(

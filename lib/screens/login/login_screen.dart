@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:madhack_finals/constants.dart';
+import 'package:madhack_finals/main.dart';
 import 'package:madhack_finals/screens/login/components/background.dart';
 import 'package:madhack_finals/screens/register/register_screen.dart';
 
@@ -103,42 +104,74 @@ class _LoginScreenState extends State<LoginScreen> {
               margin: const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
               child: ElevatedButton(
                 onPressed: () async {
-                  final snackBar = SnackBar(
-                    content: const Text('Invalid username or password'),
-                    action: SnackBarAction(
-                      label: '',
-                      onPressed: () {
-                        // Some code to undo the change.
-                      },
+                  bool isValid = loginFormKey.currentState!.validate();
+
+                  if (!isValid) {
+                    return;
+                  }
+
+                  showDialog(
+                    context: context,
+                    barrierDismissible: false,
+                    builder: (context) => const Center(
+                      child: CircularProgressIndicator(),
                     ),
                   );
 
-                  if (loginFormKey.currentState!.validate()) {
-                    bool isValidUser = false;
+                  bool isValidUser = false;
 
-                    try {
-                      final user = await _auth.signInWithEmailAndPassword(
-                          email: email, password: password);
+                  try {
+                    final user = await _auth.signInWithEmailAndPassword(
+                        email: email, password: password);
 
-                      if (user != null) {
-                        isValidUser = true;
-                        print("working");
-                      }
-                    } catch (e) {
-                      print(e);
+                    navigatorKey.currentState!.popUntil((route) => route.isFirst);
+
+                    if (user != null) {
+                      isValidUser = true;
+                      print("working");
                     }
-
-                    if(isValidUser){
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => Home2(),
+                  }
+                  on FirebaseAuthException catch (e) {
+                    navigatorKey.currentState!.popUntil((route) => route.isFirst);
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: const Text('Invalid username or password!'),
+                        backgroundColor: Colors.red,
+                        duration: const Duration(seconds: 2),
+                        action: SnackBarAction(
+                          label: '',
+                          onPressed: () {
+                            // Some code to undo the change.
+                          },
                         ),
-                      );
-                    }
-                    else{
-                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                    }
+                      ),
+                    );
+                    print(e);
+                  }
+
+                  if (isValidUser) {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => Home2(),
+                      ),
+                    );
+                  }
+                  else {
+                    navigatorKey.currentState!.popUntil((route) => route.isActive);
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: const Text('Invalid username or password!'),
+                        backgroundColor: Colors.red,
+                        duration: const Duration(seconds: 2),
+                        action: SnackBarAction(
+                          label: '',
+                          onPressed: () {
+                            // Some code to undo the change.
+                          },
+                        ),
+                      ),
+                    );
                   }
                 },
                 style: ElevatedButton.styleFrom(

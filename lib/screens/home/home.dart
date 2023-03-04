@@ -1,5 +1,5 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
 import '../../constants.dart';
 import '../login/login_screen.dart';
 
@@ -22,6 +22,9 @@ class Home2 extends StatefulWidget {
 
   @override
   Widget build(BuildContext context) {
+    final loggedInUser = FirebaseAuth.instance.currentUser!;
+    String userEmail = loggedInUser.email!;
+
     return Scaffold(
       backgroundColor: Colors.white,
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
@@ -106,8 +109,8 @@ class Home2 extends StatefulWidget {
           elevation: 140.0,
           child: ListView(
             children: [
-              const UserAccountsDrawerHeader(
-                accountEmail: Text("Dushantha Olinda"),
+              UserAccountsDrawerHeader(
+                accountEmail: Text(userEmail),
                 accountName: Text("Admin"),
                 currentAccountPicture: CircleAvatar(
                   backgroundImage: AssetImage("assets/images/bug.png"),
@@ -140,6 +143,7 @@ class Home2 extends StatefulWidget {
                 leading: const Icon(Icons.exit_to_app),
                 title: const Text("Logout"),
                 onTap: () {
+                  FirebaseAuth.instance.signOut();
                   Navigator.push(
                     context,
                     MaterialPageRoute(
