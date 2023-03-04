@@ -2,20 +2,19 @@ import 'package:flutter/material.dart';
 
 class Home2 extends StatefulWidget {
   const Home2({Key? key}) : super(key: key);
+
   @override
   State<Home2> createState() => _HomeState();
 }
 
-  class _HomeState extends State<Home2> {
-  List<String> products = ["Bed", "Sofa", "Chair"];
+class _HomeState extends State<Home2> {
+  List<String> anouncementFrom = ["SCS2202", "SCS2208", "SCS2214"];
 
-  List<String> productDetails = [
-  "King Size Bed",
-  "King SIe Sofa",
-  "Wooden Chair"
+  List<String> announcementDetails = [
+    "King Size Bed",
+    "King SIe Sofa",
+    "Wooden Chair"
   ];
-
-  List<int> price = [3000, 2500, 1860];
 
   @override
   Widget build(BuildContext context) {
@@ -74,7 +73,7 @@ class Home2 extends StatefulWidget {
         //   icon: const Icon(Icons.menu),
         //   onPressed: () {},
         // ),
-        title: const Text("Home"),
+        title: const Text("Announcements"),
         actions: const [
           IconButton(
             icon: Icon(Icons.shopping_cart),
@@ -229,19 +228,20 @@ class Home2 extends StatefulWidget {
         //     ),
         //   ]
         // )
-          child: ListView.builder(
-              itemCount: products.length,
-              itemBuilder: (context, index) {
-                return ListTile(
-                  leading: CircleAvatar(
-                    child: Text(products[index][0]),
-                  ),
-                  title: Text(products[index]),
-                  subtitle: Text(productDetails[index]),
-                  trailing: Text(price[index].toString()),
-                  onTap: () {},
-                );
-              })),
+        child: ListView.builder(
+          itemCount: anouncementFrom.length,
+          itemBuilder: (context, index) {
+            return ListTile(
+              leading: CircleAvatar(
+                child: Text(anouncementFrom[index][0]),
+              ),
+              title: Text(anouncementFrom[index]),
+              subtitle: Text(announcementDetails[index]),
+              onTap: () {},
+            );
+          },
+        ),
+      ),
     );
   }
 }
