@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:madhack_finals/constants.dart';
 import 'package:madhack_finals/main.dart';
 import 'package:madhack_finals/screens/login/components/background.dart';
+import 'package:madhack_finals/video_player.dart';
 import 'package:madhack_finals/screens/register/register_screen.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../home/home.dart';
 
@@ -93,11 +95,26 @@ class _LoginScreenState extends State<LoginScreen> {
             Container(
               alignment: Alignment.centerRight,
               margin: const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
-              child: const Text(
-                "Forgot your password?",
-                style: TextStyle(fontSize: 12, color: Color(0XFF2661FA)),
+              child: TextButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return YoutubeVideo("https://youtu.be/hWvM6de6mG8");
+                      },
+                    ),
+                  );
+              }, child: const Text(
+                  "Forgot your password?",
+                  style: TextStyle(
+                    color: Colors.blue,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
               ),
-            ),
+              ),
             const SizedBox(height: 10),
             Container(
               alignment: Alignment.center,
