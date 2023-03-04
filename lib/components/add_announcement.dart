@@ -20,6 +20,9 @@ class _AddAnnouncementState extends State<AddAnnouncement> {
   final _subtitle = TextEditingController();
   final _description = TextEditingController();
 
+  get firstDate => DateTime.now();
+  get lastDate => firstDate.add( const Duration(30));
+
 
   @override
   Widget build(BuildContext context) {
@@ -84,6 +87,7 @@ class _AddAnnouncementState extends State<AddAnnouncement> {
                 labelText: 'Description',
               ),
             ),
+            InputDatePickerFormField(firstDate: firstDate, lastDate: lastDate),
             const SizedBox(height: 20),
             OutlinedButton(
               onPressed:(){
