@@ -4,6 +4,7 @@ import 'package:madhack_finals/components/card.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 
 import '../../components/add_announcement.dart';
+import '../../components/event_calender.dart';
 import '../login/login_screen.dart';
 
 class Home2 extends StatefulWidget {
@@ -129,12 +130,26 @@ class _HomeState extends State<Home2> {
               ListTile(
                 leading: const Icon(Icons.home),
                 title: const Text("Home"),
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const Home2(),
+                    ),
+                  );
+                },
               ),
               ListTile(
                 leading: const Icon(Icons.date_range_rounded),
                 title: const Text("Schedule"),
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const EventCalender(),
+                    ),
+                  );
+                },
               ),
               ListTile(
                 leading: const Icon(Icons.person),
