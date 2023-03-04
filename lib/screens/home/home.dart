@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:madhack_finals/components/card.dart';
 
 import '../../components/add_announcement.dart';
+import '../login/login_screen.dart';
 
 class Home2 extends StatefulWidget {
   const Home2({Key? key}) : super(key: key);
@@ -119,11 +120,11 @@ class _HomeState extends State<Home2> {
             children: [
               UserAccountsDrawerHeader(
                 accountEmail: Text(userEmail),
-                accountName: Text("Admin"),
-                currentAccountPicture: CircleAvatar(
+                accountName: const Text("Admin"),
+                currentAccountPicture: const CircleAvatar(
                   backgroundImage: AssetImage("assets/images/bug.png"),
                 ),
-                otherAccountsPictures: [
+                otherAccountsPictures: const [
                   CircleAvatar(
                     backgroundImage: AssetImage("assets/images/bug.png"),
                   ),
@@ -155,7 +156,7 @@ class _HomeState extends State<Home2> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => LoginScreen(),
+                      builder: (context) => const LoginScreen(),
                     ),
                   );
                 },

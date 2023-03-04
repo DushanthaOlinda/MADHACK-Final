@@ -7,11 +7,12 @@ class WelcomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
+      resizeToAvoidBottomInset : false,
       // appBar: AppBar(
       //   title: const Text('MadHack'),
       //   backgroundColor: primaryLight,
       // ),
-      body: Body(),
+      body: SingleChildScrollView(child: Body()),
     );
   }
 }
