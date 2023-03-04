@@ -51,40 +51,6 @@ class _HomeState extends State<Home2> {
         // mini: true,
         child: const Icon(Icons.add),
       ),
-      // bottomNavigationBar: BottomAppBar(
-      //   notchMargin: 5.0,
-      //   color: Colors.black87,
-      //   elevation: 0,
-      //   shape: const CircularNotchedRectangle(),
-      //   child: SizedBox(
-      //     height: 50.0,
-      //     child: Row(
-      //       mainAxisAlignment: MainAxisAlignment.spaceAround,
-      //       children: [
-      //         IconButton(
-      //           onPressed: () {},
-      //           icon: const Icon(Icons.home),
-      //           color: Colors.blue,
-      //         ),
-      //         IconButton(
-      //           onPressed: () {},
-      //           icon: const Icon(Icons.search),
-      //           color: Colors.white,
-      //         ),
-      //         IconButton(
-      //           onPressed: () {},
-      //           icon: const Icon(Icons.shopping_cart),
-      //           color: Colors.white,
-      //         ),
-      //         IconButton(
-      //           onPressed: () {},
-      //           icon: const Icon(Icons.person),
-      //           color: Colors.white,
-      //         ),
-      //       ],
-      //     ),
-      //   ),
-      // ),
       extendBodyBehindAppBar: true,
       appBar: AppBar(
         // leading: IconButton(
