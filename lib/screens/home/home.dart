@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:madhack_finals/components/card.dart';
 
 class Home2 extends StatefulWidget {
   const Home2({Key? key}) : super(key: key);
@@ -8,7 +9,8 @@ class Home2 extends StatefulWidget {
 }
 
 class _HomeState extends State<Home2> {
-  List<String> anouncementFrom = ["SCS2202", "SCS2208", "SCS2214"];
+
+  List<String> announcement = ["SCS2202", "SCS2208", "SCS2214"];
 
   List<String> announcementDetails = [
     "King Size Bed",
@@ -164,94 +166,13 @@ class _HomeState extends State<Home2> {
               ),
             ],
           )),
-      body: Container(
-        // padding: const EdgeInsets.all(20.0),
-        // margin: const EdgeInsets.only(top: 90.0),
-        // child: Column(
-        //   children: [
-        //     Row(
-        //       children:const [
-        //         Expanded(child: Image(image: AssetImage("images/bug.png"),width: 100,)),
-        //         Expanded(flex:2, child: Image(image: AssetImage("images/bug.png"),width: 100,)),
-        //         Expanded(child: Image(image: AssetImage("images/bug.png"),width: 100,)),
-        //       ]
-        //     ),
-        //     Row(
-        //       mainAxisAlignment: MainAxisAlignment.center,
-        //       children: const [
-        //         Icon(Icons.star),
-        //         Icon(Icons.star),
-        //         Icon(Icons.star),
-        //         Icon(Icons.star_border),
-        //         Icon(Icons.star_border),
-        //       ],
-        //     ),
-        //     Row(
-        //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        //       children:[
-        //         Column(
-        //           children:const [
-        //             Icon(Icons.phone,size: 35.0,),
-        //             Text("phone"),
-        //           ],
-        //         ),
-        //         Column(
-        //           children:const [
-        //             Icon(Icons.alt_route,size: 35.0,),
-        //             Text("route"),
-        //           ],
-        //         ),
-        //         Column(
-        //           children:const [
-        //             Icon(Icons.share,size: 35.0,),
-        //             Text("share"),
-        //           ],
-        //         ),
-        //       ]
-        //     ),
-        //   ],
-        // ),
-        // child: ListView(
-        //   itemExtent: 70.0,
-        //   // reverse: true,
-        //   // scrollDirection: Axis.horizontal,
-        //   children:const [
-        //     ListTile(
-        //       leading: CircleAvatar(child: Icon(Icons.alarm_on_sharp)),
-        //       title: Text("Sales"),
-        //       subtitle: Text("Sales of the week"),
-        //       trailing: Text("3500"),
-        //       // onTap: null,
-        //     ),
-        //     ListTile(
-        //       leading: CircleAvatar(child: Icon(Icons.people)),
-        //       title: Text("Customers"),
-        //       subtitle: Text("Total customers"),
-        //       trailing: Text("150"),
-        //       // onTap: null,
-        //     ),
-        //     ListTile(
-        //       leading: CircleAvatar(child: Icon(Icons.alarm_on_sharp)),
-        //       title: Text("Profit"),
-        //       subtitle: Text("Profit of the week"),
-        //       trailing: Text("2000"),
-        //       // onTap: null,
-        //     ),
-        //   ]
-        // )
-        child: ListView.builder(
-          itemCount: anouncementFrom.length,
-          itemBuilder: (context, index) {
-            return ListTile(
-              leading: CircleAvatar(
-                child: Text(anouncementFrom[index][0]),
-              ),
-              title: Text(anouncementFrom[index]),
-              subtitle: Text(announcementDetails[index]),
-              onTap: () {},
-            );
-          },
-        ),
+      body: ListView.builder(
+        itemCount: announcement.length,
+        itemBuilder: (context, index) {
+          return CardRender(
+              title: announcement[index].toString(),
+              subtitle: announcementDetails[index].toString());
+        },
       ),
     );
   }
