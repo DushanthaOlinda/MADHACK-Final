@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
+import 'Screens/login/login.dart';
 
 import 'package:madhack_finals/constants.dart';
 import 'package:madhack_finals/screens/welcome/welcome_screen.dart';
@@ -26,7 +27,7 @@ class MyApp extends StatelessWidget {
         primaryColorLight: primaryLight,
         scaffoldBackgroundColor: Colors.white
       ),
-      home: const WelcomeScreen(),
+      home:LoginScreen(),
     );
   }
 }
