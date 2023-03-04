@@ -1,7 +1,8 @@
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+import 'package:intl/intl.dart'
 import 'package:madhack_finals/components/pass.dart';
 import 'package:madhack_finals/constants.dart';
 
@@ -23,9 +24,13 @@ class _AddAnnouncementState extends State<AddAnnouncement> {
     _announcementDetails = AnnouncementDetails();
   }
 
+  TextEditingController dateInput = TextEditingController();
+  TextEditingController timeInput = TextEditingController();
+
   @override
   void initState() {
-    _dateInput.text = ""; //set the initial value of text field
+    dateInput.text = ""; //set the initial value of text field
+    timeInput.text = "";
     super.initState();
   }
 
@@ -40,6 +45,7 @@ class _AddAnnouncementState extends State<AddAnnouncement> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: const Text('New Kuppi'),
         backgroundColor: Colors.blue,
@@ -234,7 +240,6 @@ class _AddAnnouncementState extends State<AddAnnouncement> {
                       ),
                     ),
                   );
-
                 }
               },
               icon: const Icon(Icons.add),
@@ -251,4 +256,6 @@ class AnnouncementDetails {
   late String title;
   late String subtitle;
   late String description;
+  late String formattedDate;
+  late String formattedTime;
 }

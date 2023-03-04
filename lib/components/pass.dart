@@ -17,16 +17,24 @@ class Pass extends StatelessWidget {
         padding: const EdgeInsets.all(20),
         child: ListView(children:  [
           ListTile(
-            leading: const Icon(Icons.account_balance_wallet_outlined),
+            leading: const Icon(Icons.title),
             title: Text(announcementDetails.title),
           ),
           ListTile(
-            leading: const Icon(Icons.account_balance_wallet_outlined),
+            leading: const Icon(Icons.subtitles),
             title: Text(announcementDetails.subtitle),
           ),
           ListTile(
-            leading: const Icon(Icons.account_balance_wallet_outlined),
+            leading: const Icon(Icons.description),
             title: Text(announcementDetails.description),
+          ),
+          ListTile(
+            leading: const Icon(Icons.calendar_month),
+            title: Text(announcementDetails.formattedDate.toString()),
+          ),
+          ListTile(
+            leading: const Icon(Icons.alarm),
+            title: Text(announcementDetails.formattedTime.toString()),
           ),
         ]),
       ),

@@ -4,8 +4,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:madhack_finals/components/card.dart';
+import 'package:syncfusion_flutter_calendar/calendar.dart';
 
 import '../../components/add_announcement.dart';
+import '../../components/event_calender.dart';
 import '../login/login_screen.dart';
 
 class Home2 extends StatefulWidget {
@@ -56,7 +58,7 @@ class _HomeState extends State<Home2> {
 
     return Scaffold(
       backgroundColor: Colors.white,
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           // push to the add announcement page
@@ -66,9 +68,9 @@ class _HomeState extends State<Home2> {
               builder: (context) => AddAnnouncement(),
             ),);
         },
-        backgroundColor: Colors.black87,
-        foregroundColor: Colors.blue,
-        elevation: 0,
+        foregroundColor: Colors.black87,
+        backgroundColor: Colors.blue,
+        elevation: 2,
         // shape: BeveledRectangleBorder(
         //   borderRadius: BorderRadius.circular(20.0),
         //   side: const BorderSide(color: Colors.blue, width: 2.0,style: BorderStyle.solid),
@@ -76,40 +78,35 @@ class _HomeState extends State<Home2> {
         // mini: true,
         child: const Icon(Icons.add),
       ),
-      bottomNavigationBar: BottomAppBar(
-        notchMargin: 5.0,
-        color: Colors.black87,
-        elevation: 0,
-        shape: const CircularNotchedRectangle(),
-        child: SizedBox(
-          height: 50.0,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              IconButton(
-                onPressed: () {},
-                icon: const Icon(Icons.home),
-                color: Colors.blue,
-              ),
-              IconButton(
-                onPressed: () {},
-                icon: const Icon(Icons.search),
-                color: Colors.white,
-              ),
-              IconButton(
-                onPressed: () {},
-                icon: const Icon(Icons.shopping_cart),
-                color: Colors.white,
-              ),
-              IconButton(
-                onPressed: () {},
-                icon: const Icon(Icons.person),
-                color: Colors.white,
-              ),
-            ],
-          ),
-        ),
-      ),
+      // bottomNavigationBar: BottomAppBar(
+      //   notchMargin: 5.0,
+      //   color: Colors.black87,
+      //   elevation: 0,
+      //   shape: const CircularNotchedRectangle(),
+      //   child: SizedBox(
+      //     height: 50.0,
+      //     child: Row(
+      //       mainAxisAlignment: MainAxisAlignment.spaceAround,
+      //       children: [
+      //         IconButton(
+      //           onPressed: () {},
+      //           icon: const Icon(Icons.home),
+      //           color: Colors.blue,
+      //         ),
+      //         IconButton(
+      //           onPressed: () {},
+      //           icon: const Icon(Icons.search),
+      //           color: Colors.white,
+      //         ),
+      //         IconButton(
+      //           onPressed: () {},
+      //           icon: const Icon(Icons.person),
+      //           color: Colors.white,
+      //         ),
+      //       ],
+      //     ),
+      //   ),
+      // ),
       extendBodyBehindAppBar: true,
       appBar: AppBar(
         // leading: IconButton(
@@ -151,24 +148,30 @@ class _HomeState extends State<Home2> {
                 currentAccountPicture: const CircleAvatar(
                   backgroundImage: AssetImage("assets/images/bug.png"),
                 ),
-                otherAccountsPictures: const [
-                  CircleAvatar(
-                    backgroundImage: AssetImage("assets/images/bug.png"),
-                  ),
-                  CircleAvatar(
-                    backgroundImage: AssetImage("assets/images/bug.png"),
-                  )
-                ],
               ),
               ListTile(
                 leading: const Icon(Icons.home),
                 title: const Text("Home"),
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const Home2(),
+                    ),
+                  );
+                },
               ),
               ListTile(
                 leading: const Icon(Icons.date_range_rounded),
                 title: const Text("Schedule"),
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const EventCalender(),
+                    ),
+                  );
+                },
               ),
               ListTile(
                 leading: const Icon(Icons.person),
@@ -183,30 +186,11 @@ class _HomeState extends State<Home2> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => LoginScreen(),
+                      builder: (context) => const LoginScreen(),
                     ),
                   );
                 },
               ),
-              // const Padding(
-              //   padding: EdgeInsets.all(14.0),
-              //   child: Text("Labels"),
-              // ),
-              // ListTile(
-              //   leading: const Icon(Icons.label),
-              //   title: const Text("Red"),
-              //   onTap: () {},
-              // ),
-              // ListTile(
-              //   leading: const Icon(Icons.label),
-              //   title: const Text("Blue"),
-              //   onTap: () {},
-              // ),
-              // ListTile(
-              //   leading: const Icon(Icons.label),
-              //   title: const Text("Green"),
-              //   onTap: () {},
-              // ),
             ],
           )),
       body: ListView.builder(
