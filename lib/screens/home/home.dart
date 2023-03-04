@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+import '../../constants.dart';
+import '../login/login_screen.dart';
+
 class Home2 extends StatefulWidget {
   const Home2({Key? key}) : super(key: key);
   @override
@@ -20,12 +23,12 @@ class Home2 extends StatefulWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.amber,
+      backgroundColor: Colors.white,
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
         onPressed: () {},
         backgroundColor: Colors.black87,
-        foregroundColor: Colors.yellow,
+        foregroundColor: Colors.blue,
         elevation: 0,
         // shape: BeveledRectangleBorder(
         //   borderRadius: BorderRadius.circular(20.0),
@@ -47,7 +50,7 @@ class Home2 extends StatefulWidget {
               IconButton(
                 onPressed: () {},
                 icon: const Icon(Icons.home),
-                color: Colors.yellow,
+                color: Colors.blue,
               ),
               IconButton(
                 onPressed: () {},
@@ -74,24 +77,24 @@ class Home2 extends StatefulWidget {
         //   icon: const Icon(Icons.menu),
         //   onPressed: () {},
         // ),
-        title: const Text("Home"),
+        title: const Text("Dashboard"),
         actions: const [
           IconButton(
-            icon: Icon(Icons.shopping_cart),
+            icon: Icon(Icons.menu_book),
+            onPressed: null,
+          ),
+          IconButton(
+            icon: Icon(Icons.edit_document),
             onPressed: null,
           ),
           IconButton(
             icon: Icon(Icons.search),
             onPressed: null,
           ),
-          IconButton(
-            icon: Icon(Icons.menu_book),
-            onPressed: null,
-          ),
         ],
         elevation: 0,
         centerTitle: true,
-        backgroundColor: Colors.purple.withOpacity(0.7),
+        backgroundColor: Colors.blue,
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.vertical(
             bottom: Radius.circular(20),
@@ -104,8 +107,8 @@ class Home2 extends StatefulWidget {
           child: ListView(
             children: [
               const UserAccountsDrawerHeader(
-                accountEmail: Text("dushanthaolinda29@gmail.com"),
-                accountName: Text("Dushantha Olinda"),
+                accountEmail: Text("Dushantha Olinda"),
+                accountName: Text("Admin"),
                 currentAccountPicture: CircleAvatar(
                   backgroundImage: AssetImage("assets/images/bug.png"),
                 ),
@@ -124,8 +127,8 @@ class Home2 extends StatefulWidget {
                 onTap: () {},
               ),
               ListTile(
-                leading: const Icon(Icons.shopping_cart),
-                title: const Text("Cart"),
+                leading: const Icon(Icons.date_range_rounded),
+                title: const Text("Schedule"),
                 onTap: () {},
               ),
               ListTile(
@@ -133,25 +136,37 @@ class Home2 extends StatefulWidget {
                 title: const Text("Profile"),
                 onTap: () {},
               ),
-              const Padding(
-                padding: EdgeInsets.all(14.0),
-                child: Text("Labels"),
-              ),
               ListTile(
-                leading: const Icon(Icons.label),
-                title: const Text("Red"),
-                onTap: () {},
+                leading: const Icon(Icons.exit_to_app),
+                title: const Text("Logout"),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => LoginScreen(),
+                    ),
+                  );
+                },
               ),
-              ListTile(
-                leading: const Icon(Icons.label),
-                title: const Text("Blue"),
-                onTap: () {},
-              ),
-              ListTile(
-                leading: const Icon(Icons.label),
-                title: const Text("Green"),
-                onTap: () {},
-              ),
+              // const Padding(
+              //   padding: EdgeInsets.all(14.0),
+              //   child: Text("Labels"),
+              // ),
+              // ListTile(
+              //   leading: const Icon(Icons.label),
+              //   title: const Text("Red"),
+              //   onTap: () {},
+              // ),
+              // ListTile(
+              //   leading: const Icon(Icons.label),
+              //   title: const Text("Blue"),
+              //   onTap: () {},
+              // ),
+              // ListTile(
+              //   leading: const Icon(Icons.label),
+              //   title: const Text("Green"),
+              //   onTap: () {},
+              // ),
             ],
           )),
       body: Container(

@@ -1,5 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:madhack_finals/screens/home/home.dart';
 import 'firebase_options.dart';
 
@@ -7,7 +9,7 @@ import 'package:madhack_finals/constants.dart';
 import 'package:madhack_finals/screens/welcome/welcome_screen.dart';
 
 
-Future main() async {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(const MyApp());
@@ -27,7 +29,7 @@ class MyApp extends StatelessWidget {
         primaryColorLight: primaryLight,
         scaffoldBackgroundColor: Colors.white
       ),
-      home: const Home2(),
+      home: const WelcomeScreen(),
     );
   }
 }
