@@ -1,17 +1,29 @@
+import 'dart:convert';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:madhack_finals/components/card.dart';
 
 import '../../components/add_announcement.dart';
+import '../login/login_screen.dart';
 
 class Home2 extends StatefulWidget {
-  const Home2({Key? key}) : super(key: key);
+  Home2({super.key});
+
+  String uid = "";
+  String userEmail ="";
+  String userName="";
+
+
 
   @override
   State<Home2> createState() => _HomeState();
 }
 
 class _HomeState extends State<Home2> {
+
+  final _auth = FirebaseAuth.instance;
 
   List<String> announcement = ["SCS2202", "SCS2208", "SCS2214"];
 
@@ -23,8 +35,24 @@ class _HomeState extends State<Home2> {
 
   @override
   Widget build(BuildContext context) {
-    final loggedInUser = FirebaseAuth.instance.currentUser!;
-    String userEmail = loggedInUser.email!;
+    final loggedInUser = _auth.currentUser!;
+    widget.uid = loggedInUser.uid!;
+    widget.userEmail = loggedInUser.email!;
+
+    final CollectionReference users = FirebaseFirestore.instance.collection('users');
+    final userDoc = users.doc(widget.uid).get();
+
+    userDoc.then((DocumentSnapshot documentSnapshot){
+      if(documentSnapshot.exists){
+        final userData = documentSnapshot.data() as Map<String, dynamic>;
+        widget.userName = userData['full_name'];
+        print('User data: ${userData}');
+        print(widget.userName.toString());
+      }
+      else{
+        print('user does not exist');
+      }
+    });
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -35,7 +63,7 @@ class _HomeState extends State<Home2> {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => const AddAnnouncement(),
+              builder: (context) => AddAnnouncement(),
             ),);
         },
         backgroundColor: Colors.black87,
@@ -118,12 +146,12 @@ class _HomeState extends State<Home2> {
           child: ListView(
             children: [
               UserAccountsDrawerHeader(
-                accountEmail: Text(userEmail),
-                accountName: Text("Admin"),
-                currentAccountPicture: CircleAvatar(
+                accountEmail: Text(widget.userEmail),
+                accountName: Text(widget.userName.toString()),
+                currentAccountPicture: const CircleAvatar(
                   backgroundImage: AssetImage("assets/images/bug.png"),
                 ),
-                otherAccountsPictures: [
+                otherAccountsPictures: const [
                   CircleAvatar(
                     backgroundImage: AssetImage("assets/images/bug.png"),
                   ),

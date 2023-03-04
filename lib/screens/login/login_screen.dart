@@ -1,21 +1,28 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:madhack_finals/constants.dart';
 import 'package:madhack_finals/main.dart';
+import 'package:madhack_finals/screens/home/admin_home.dart';
 import 'package:madhack_finals/screens/login/components/background.dart';
 import 'package:madhack_finals/screens/register/register_screen.dart';
 
 import '../home/home.dart';
 
 class LoginScreen extends StatefulWidget {
-  const LoginScreen({Key? key}) : super(key: key);
+  LoginScreen({Key? key}) : super(key: key);
+
+  String role = "";
+  String uid = "";
+
   @override
   _LoginScreenState createState() => _LoginScreenState();
 }
 
 class _LoginScreenState extends State<LoginScreen> {
   final _auth = FirebaseAuth.instance;
+  final db = FirebaseAuth.instance;
   final loginFormKey = GlobalKey<FormState>();
   String email = "";
   String password = "";
@@ -26,7 +33,7 @@ class _LoginScreenState extends State<LoginScreen> {
     final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
     return Scaffold(
-      body: Background(
+      body: SingleChildScrollView(child: Background(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
@@ -78,7 +85,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         if (password.isEmpty) {
                           return "password required";
                         } else if (!RegExp(
-                                r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$')
+                            r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$')
                             .hasMatch(password)) {
                           return "invalid password";
                         } else {
@@ -121,14 +128,30 @@ class _LoginScreenState extends State<LoginScreen> {
                   bool isValidUser = false;
 
                   try {
-                    final user = await _auth.signInWithEmailAndPassword(
+                    UserCredential user = await _auth.signInWithEmailAndPassword(
                         email: email, password: password);
 
                     navigatorKey.currentState!.popUntil((route) => route.isFirst);
 
                     if (user != null) {
+                      print(user.user?.uid);
+                      widget.uid = user.user!.uid;
+
+                      final CollectionReference users = FirebaseFirestore.instance.collection('users');
+                      final userDoc = users.doc(user.user?.uid).get();
+
+                      userDoc.then((DocumentSnapshot documentSnapshot){
+                        if(documentSnapshot.exists){
+                          final userData = documentSnapshot.data() as Map<String, dynamic>;
+                          widget.role = userData['role'];
+                          print(widget.role.toString());
+                        }
+                        else{
+                          print('user does not exist');
+                        }
+                      });
+
                       isValidUser = true;
-                      print("working");
                     }
                   }
                   on FirebaseAuthException catch (e) {
@@ -150,12 +173,22 @@ class _LoginScreenState extends State<LoginScreen> {
                   }
 
                   if (isValidUser) {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => Home2(),
-                      ),
-                    );
+                    if(widget.role.toString() == "student"){
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => Home2(),
+                        ),
+                      );
+                    }
+                    else if(widget.role.toString() == "admin") {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => AdminHome(),
+                        ),
+                      );
+                    }
                   }
                   else {
                     navigatorKey.currentState!.popUntil((route) => route.isActive);
@@ -225,7 +258,7 @@ class _LoginScreenState extends State<LoginScreen> {
             )
           ],
         ),
-      ),
+      ),),
     );
   }
 }
