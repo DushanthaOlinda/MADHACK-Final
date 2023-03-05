@@ -1,6 +1,6 @@
-# madhack_finals
+# KuppyBuddy
 
-A new Flutter project.
+A Kuppi management mobile application for universit students
 
 ## Getting Started
 
