@@ -32,6 +32,10 @@ class _LoginScreenState extends State<LoginScreen> {
     Size size = MediaQuery.of(context).size;
     final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
+    final String typeStudent = "student";
+    final String typeAdmin = "admin";
+
+
     return Scaffold(
       body: SingleChildScrollView(child: Background(
         child: Column(
@@ -125,86 +129,93 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   );
 
-                  bool isValidUser = false;
-
                   try {
                     UserCredential user = await _auth.signInWithEmailAndPassword(
                         email: email, password: password);
 
-                    navigatorKey.currentState!.popUntil((route) => route.isFirst);
+                    //navigatorKey.currentState!.popUntil((route) => route.isFirst);
 
                     if (user != null) {
                       print(user.user?.uid);
                       widget.uid = user.user!.uid;
 
                       final CollectionReference users = FirebaseFirestore.instance.collection('users');
-                      final userDoc = users.doc(user.user?.uid).get();
+                      final DocumentSnapshot userDoc = await users.doc(user.user?.uid).get();
 
-                      userDoc.then((DocumentSnapshot documentSnapshot){
-                        if(documentSnapshot.exists){
-                          final userData = documentSnapshot.data() as Map<String, dynamic>;
-                          widget.role = userData['role'];
-                          print(widget.role.toString());
-                        }
-                        else{
-                          print('user does not exist');
-                        }
-                      });
+                      if (userDoc.exists && userDoc.data() != null) {
+                        final Map<String, dynamic> userData = userDoc.data() as Map<String, dynamic>;
 
-                      isValidUser = true;
+                        print(userData['role']);
+
+                        if(userData.containsKey('role')) {
+                          if(userData['role'] == typeStudent){
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => Home2(),
+                              ),
+                            );
+                          }
+                          else if(userData['role'] == typeAdmin) {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => AdminHome(),
+                              ),
+                            );
+                          }
+                        }
+                      }
                     }
                   }
                   on FirebaseAuthException catch (e) {
                     navigatorKey.currentState!.popUntil((route) => route.isFirst);
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: const Text('Invalid username or password!'),
-                        backgroundColor: Colors.red,
-                        duration: const Duration(seconds: 2),
-                        action: SnackBarAction(
-                          label: '',
-                          onPressed: () {
-                            // Some code to undo the change.
-                          },
+                    if(e.code == "invalid-email"){
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: const Text('Invalid email!'),
+                          backgroundColor: Colors.red,
+                          duration: const Duration(seconds: 2),
+                          action: SnackBarAction(
+                            label: '',
+                            onPressed: () {
+                              // Some code to undo the change.
+                            },
+                          ),
                         ),
-                      ),
-                    );
+                      );
+                    }
+                    else if(e.code == "user-not-found"){
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: const Text('User not found!'),
+                          backgroundColor: Colors.red,
+                          duration: const Duration(seconds: 2),
+                          action: SnackBarAction(
+                            label: '',
+                            onPressed: () {
+                              // Some code to undo the change.
+                            },
+                          ),
+                        ),
+                      );
+                    }
+                    else if(e.code == "wrong-password"){
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: const Text('Incorrect password!'),
+                          backgroundColor: Colors.red,
+                          duration: const Duration(seconds: 2),
+                          action: SnackBarAction(
+                            label: '',
+                            onPressed: () {
+                              // Some code to undo the change.
+                            },
+                          ),
+                        ),
+                      );
+                    }
                     print(e);
-                  }
-
-                  if (isValidUser) {
-                    if(widget.role.toString() == "student"){
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => Home2(),
-                        ),
-                      );
-                    }
-                    else if(widget.role.toString() == "admin") {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => AdminHome(),
-                        ),
-                      );
-                    }
-                  }
-                  else {
-                    navigatorKey.currentState!.popUntil((route) => route.isActive);
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: const Text('Invalid username or password!'),
-                        backgroundColor: Colors.red,
-                        duration: const Duration(seconds: 2),
-                        action: SnackBarAction(
-                          label: '',
-                          onPressed: () {
-                            // Some code to undo the change.
-                          },
-                        ),
-                      ),
-                    );
                   }
                 },
                 style: ElevatedButton.styleFrom(
@@ -262,3 +273,4 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 }
+

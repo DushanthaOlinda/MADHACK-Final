@@ -10,7 +10,7 @@ class Body extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    return Container(
+    return SingleChildScrollView(child: Container(
       width: double.infinity,
       height: size.height,
       decoration: const BoxDecoration(
@@ -57,7 +57,7 @@ class Body extends StatelessWidget {
                   borderRadius: BorderRadius.circular(80.0),
                 ),
                 padding:
-                    const EdgeInsets.symmetric(vertical: 15, horizontal: 40),
+                const EdgeInsets.symmetric(vertical: 15, horizontal: 40),
                 foregroundColor: primaryLight,
                 backgroundColor: primaryLight,
               ),
@@ -85,7 +85,7 @@ class Body extends StatelessWidget {
                   borderRadius: BorderRadius.circular(80.0),
                 ),
                 padding:
-                    const EdgeInsets.symmetric(vertical: 15, horizontal: 40),
+                const EdgeInsets.symmetric(vertical: 15, horizontal: 40),
                 foregroundColor: primaryLight,
                 backgroundColor: primaryLight.withOpacity(0.3),
               ),
@@ -104,6 +104,6 @@ class Body extends StatelessWidget {
           ),
         ],
       ),
-    );
+    ),);
   }
 }

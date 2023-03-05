@@ -130,7 +130,7 @@ class _AddSubjectState extends State<AddSubject> {
                       borderRadius: BorderRadius.all(Radius.circular(10)),
                       borderSide: BorderSide(color: Colors.blue),
                     ),
-                    labelText: "Enter Date" //label text of field
+                    labelText: "Upload Image" //label text of field
                 ),
                 readOnly: true,
                 //set it true, so that user will not able to edit text
@@ -144,8 +144,8 @@ class _AddSubjectState extends State<AddSubject> {
 
                       setState(() {
                         this.image = tempImage;
-                        _imageInput.text = tempImage as String;
-                        _imageInput.value = tempImage as TextEditingValue;
+                        _imageInput.text = tempImage.path;
+                        _imageInput.value = tempImage.path as TextEditingValue;
                       });
                     }
                     else{

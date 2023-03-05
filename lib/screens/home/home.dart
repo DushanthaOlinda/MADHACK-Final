@@ -4,25 +4,24 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:madhack_finals/components/card.dart';
+import 'package:syncfusion_flutter_calendar/calendar.dart';
 
 import '../../components/add_announcement.dart';
+import '../../components/event_calendar.dart';
 import '../login/login_screen.dart';
 
 class Home2 extends StatefulWidget {
   Home2({super.key});
 
   String uid = "";
-  String userEmail ="";
-  String userName="";
-
-
+  String userEmail = "";
+  String userName = "";
 
   @override
   State<Home2> createState() => _HomeState();
 }
 
 class _HomeState extends State<Home2> {
-
   final _auth = FirebaseAuth.instance;
 
   List<String> announcement = ["SCS2202", "SCS2208", "SCS2214"];
@@ -39,24 +38,25 @@ class _HomeState extends State<Home2> {
     widget.uid = loggedInUser.uid!;
     widget.userEmail = loggedInUser.email!;
 
-    final CollectionReference users = FirebaseFirestore.instance.collection('users');
+    final CollectionReference users =
+        FirebaseFirestore.instance.collection('users');
     final userDoc = users.doc(widget.uid).get();
 
-    userDoc.then((DocumentSnapshot documentSnapshot){
-      if(documentSnapshot.exists){
-        final userData = documentSnapshot.data() as Map<String, dynamic>;
+    userDoc.then((DocumentSnapshot documentSnapshot) {
+      if (documentSnapshot.exists) {
+        final Map<String, dynamic> userData =
+            documentSnapshot.data() as Map<String, dynamic>;
         widget.userName = userData['full_name'];
         print('User data: ${userData}');
         print(widget.userName.toString());
-      }
-      else{
+      } else {
         print('user does not exist');
       }
     });
 
     return Scaffold(
       backgroundColor: Colors.white,
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           // push to the add announcement page
@@ -66,49 +66,15 @@ class _HomeState extends State<Home2> {
               builder: (context) => AddAnnouncement(),
             ),);
         },
-        backgroundColor: Colors.black87,
-        foregroundColor: Colors.blue,
-        elevation: 0,
+        foregroundColor: Colors.white,
+        backgroundColor: Colors.blue,
+        elevation: 2,
         // shape: BeveledRectangleBorder(
         //   borderRadius: BorderRadius.circular(20.0),
         //   side: const BorderSide(color: Colors.blue, width: 2.0,style: BorderStyle.solid),
         // ),
         // mini: true,
         child: const Icon(Icons.add),
-      ),
-      bottomNavigationBar: BottomAppBar(
-        notchMargin: 5.0,
-        color: Colors.black87,
-        elevation: 0,
-        shape: const CircularNotchedRectangle(),
-        child: SizedBox(
-          height: 50.0,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              IconButton(
-                onPressed: () {},
-                icon: const Icon(Icons.home),
-                color: Colors.blue,
-              ),
-              IconButton(
-                onPressed: () {},
-                icon: const Icon(Icons.search),
-                color: Colors.white,
-              ),
-              IconButton(
-                onPressed: () {},
-                icon: const Icon(Icons.shopping_cart),
-                color: Colors.white,
-              ),
-              IconButton(
-                onPressed: () {},
-                icon: const Icon(Icons.person),
-                color: Colors.white,
-              ),
-            ],
-          ),
-        ),
       ),
       extendBodyBehindAppBar: true,
       appBar: AppBar(
@@ -168,7 +134,14 @@ class _HomeState extends State<Home2> {
               ListTile(
                 leading: const Icon(Icons.date_range_rounded),
                 title: const Text("Schedule"),
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const EventCalender(),
+                    ),
+                  );
+                },
               ),
               ListTile(
                 leading: const Icon(Icons.person),
