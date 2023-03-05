@@ -32,7 +32,11 @@ class MyApp extends StatelessWidget {
         primaryColorLight: primaryLight,
         scaffoldBackgroundColor: Colors.white
       ),
+<<<<<<< Updated upstream
       home: const WelcomeScreen(),
+=======
+      home: WelcomeScreen(),
+>>>>>>> Stashed changes
     );
   }
 }
