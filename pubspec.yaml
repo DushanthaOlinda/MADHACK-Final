@@ -31,8 +31,11 @@ dependencies:
   flutter:
     sdk: flutter
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
   intl: ^0.17.0
   syncfusion_flutter_calendar: ^19.3.56-beta
+=======
+>>>>>>> Stashed changes
   url_launcher: ^6.0.9
   youtube_player_flutter: ^8.1.0
   visibility_detector: ^0.3.3

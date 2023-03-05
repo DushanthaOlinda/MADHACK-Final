@@ -2,13 +2,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:madhack_finals/constants.dart';
 import 'package:madhack_finals/main.dart';
 import 'package:madhack_finals/screens/home/admin_home.dart';
 import 'package:madhack_finals/screens/login/components/background.dart';
-import 'package:madhack_finals/video_player.dart';
 import 'package:madhack_finals/screens/register/register_screen.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 import '../home/home.dart';
 
@@ -78,7 +75,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         }
                       },
                     ),
-                  ),
+                  ],),
                   const SizedBox(height: 10),
                   Container(
                     alignment: Alignment.center,
@@ -99,8 +96,12 @@ class _LoginScreenState extends State<LoginScreen> {
                         }
                       },
                     ),
+<<<<<<< Updated upstream
                   ),
                 ],
+=======
+                ),
+>>>>>>> Stashed changes
               ),
             ),
             Container(
