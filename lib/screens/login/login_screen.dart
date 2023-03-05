@@ -37,44 +37,47 @@ class _LoginScreenState extends State<LoginScreen> {
 
 
     return Scaffold(
-      body: SingleChildScrollView(child: Background(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Container(
-              alignment: Alignment.centerLeft,
-              padding: const EdgeInsets.symmetric(horizontal: 30),
-              child: const Text(
-                "LOGIN",
-                style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: Colors.blue,
-                    fontSize: 36),
-                textAlign: TextAlign.left,
+      resizeToAvoidBottomInset : false,
+      body: SingleChildScrollView(
+        child: Background(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Container(
+                alignment: Alignment.centerLeft,
+                padding: const EdgeInsets.symmetric(horizontal: 30),
+                child: const Text(
+                  "LOGIN",
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.blue,
+                      fontSize: 36),
+                  textAlign: TextAlign.left,
+                ),
               ),
-            ),
-            Image.asset("assets/images/login.jpg", width: size.width * 0.6),
-            // const SizedBox(height: 10),
-            Form(
-              key: loginFormKey,
-              child: Column(
-                children: [
-                  Container(
-                    alignment: Alignment.center,
-                    margin: const EdgeInsets.symmetric(horizontal: 40),
-                    child: TextFormField(
-                      keyboardType: TextInputType.emailAddress,
-                      decoration: const InputDecoration(labelText: "Email"),
-                      validator: (value) {
-                        email = value!;
-                        if (email.isEmpty) {
-                          return "email required";
-                        } else if (!RegExp(r'^\S+@\S+\.\S+$').hasMatch(email)) {
-                          return "invalid email";
-                        } else {
-                          return null;
-                        }
-                      },
+              Image.asset("assets/images/login.jpg", width: size.width * 0.6),
+              // const SizedBox(height: 10),
+              Form(
+                key: loginFormKey,
+                child: Column(
+                  children: [
+                    Container(
+                      alignment: Alignment.center,
+                      margin: const EdgeInsets.symmetric(horizontal: 40),
+                      child: TextFormField(
+                        keyboardType: TextInputType.emailAddress,
+                        decoration: const InputDecoration(labelText: "Email"),
+                        validator: (value) {
+                          email = value!;
+                          if (email.isEmpty) {
+                            return "email required";
+                          } else if (!RegExp(r'^\S+@\S+\.\S+$').hasMatch(email)) {
+                            return "invalid email";
+                          } else {
+                            return null;
+                          }
+                        },
+                      ),
                     ),
                   ),
                   const SizedBox(height: 10),
@@ -97,38 +100,36 @@ class _LoginScreenState extends State<LoginScreen> {
                         }
                       },
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-            Container(
-              alignment: Alignment.centerRight,
-              margin: const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
-              child: const Text(
-                "Forgot your password?",
-                style: TextStyle(fontSize: 12, color: Color(0XFF2661FA)),
+              Container(
+                alignment: Alignment.centerRight,
+                margin: const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
+                child: const Text(
+                  "Forgot your password?",
+                  style: TextStyle(fontSize: 12, color: Color(0XFF2661FA)),
+                ),
               ),
-            ),
-            const SizedBox(height: 10),
-            Container(
-              alignment: Alignment.center,
-              margin: const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
-              child: ElevatedButton(
-                onPressed: () async {
-                  bool isValid = loginFormKey.currentState!.validate();
+              const SizedBox(height: 10),
+              Container(
+                alignment: Alignment.center,
+                margin: const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
+                child: ElevatedButton(
+                  onPressed: () async {
+                    bool isValid = loginFormKey.currentState!.validate();
 
-                  if (!isValid) {
-                    return;
-                  }
+                    if (!isValid) {
+                      return;
+                    }
 
-                  showDialog(
-                    context: context,
-                    barrierDismissible: false,
-                    builder: (context) => const Center(
-                      child: CircularProgressIndicator(),
-                    ),
-                  );
-
+                    showDialog(
+                      context: context,
+                      barrierDismissible: false,
+                      builder: (context) => const Center(
+                        child: CircularProgressIndicator(),
+                      ),
+                    );
                   try {
                     UserCredential user = await _auth.signInWithEmailAndPassword(
                         email: email, password: password);
@@ -214,60 +215,58 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                         ),
                       );
-                    }
-                    print(e);
-                  }
-                },
-                style: ElevatedButton.styleFrom(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(80.0),
+                    },
+                  style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(80.0),
+                    ),
+                    backgroundColor: Colors.blue,
+                    padding: const EdgeInsets.all(0),
                   ),
-                  backgroundColor: Colors.blue,
-                  padding: const EdgeInsets.all(0),
+                  child: Container(
+                    alignment: Alignment.center,
+                    height: 50.0,
+                    width: size.width * 0.5,
+                    // decoration: BoxDecoration(
+                    //   borderRadius: BorderRadius.circular(80.0),
+                    //   gradient:
+                    //       const LinearGradient(colors: [primary, primaryLight]),
+                    // ),
+                    padding: const EdgeInsets.all(0),
+                    child: const Text(
+                      "LOGIN",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20,
+                      ),
+                    ),
+                  ),
                 ),
-                child: Container(
-                  alignment: Alignment.center,
-                  height: 50.0,
-                  width: size.width * 0.5,
-                  // decoration: BoxDecoration(
-                  //   borderRadius: BorderRadius.circular(80.0),
-                  //   gradient:
-                  //       const LinearGradient(colors: [primary, primaryLight]),
-                  // ),
-                  padding: const EdgeInsets.all(0),
+              ),
+              Container(
+                alignment: Alignment.centerRight,
+                margin: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+                child: GestureDetector(
+                  onTap: () => {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => RegisterScreen(),
+                      ),
+                    ),
+                  },
                   child: const Text(
-                    "LOGIN",
-                    textAlign: TextAlign.center,
+                    "Don't Have an Account? Sign up",
                     style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20,
-                    ),
+                        fontSize: 12,
+                        fontWeight: FontWeight.bold,
+                        color: Color(0xFF2661FA)),
                   ),
                 ),
-              ),
-            ),
-            Container(
-              alignment: Alignment.centerRight,
-              margin: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
-              child: GestureDetector(
-                onTap: () => {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => RegisterScreen(),
-                    ),
-                  ),
-                },
-                child: const Text(
-                  "Don't Have an Account? Sign up",
-                  style: TextStyle(
-                      fontSize: 12,
-                      fontWeight: FontWeight.bold,
-                      color: Color(0xFF2661FA)),
-                ),
-              ),
-            )
-          ],
+              )
+            ],
+          ),
         ),
       ),),
     );

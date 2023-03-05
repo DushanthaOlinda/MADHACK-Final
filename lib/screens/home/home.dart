@@ -117,19 +117,18 @@ class _HomeState extends State<Home2> {
                 currentAccountPicture: const CircleAvatar(
                   backgroundImage: AssetImage("assets/images/bug.png"),
                 ),
-                otherAccountsPictures: const [
-                  CircleAvatar(
-                    backgroundImage: AssetImage("assets/images/bug.png"),
-                  ),
-                  CircleAvatar(
-                    backgroundImage: AssetImage("assets/images/bug.png"),
-                  )
-                ],
               ),
               ListTile(
                 leading: const Icon(Icons.home),
                 title: const Text("Home"),
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const Home2(),
+                    ),
+                  );
+                },
               ),
               ListTile(
                 leading: const Icon(Icons.date_range_rounded),
@@ -156,30 +155,11 @@ class _HomeState extends State<Home2> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => LoginScreen(),
+                      builder: (context) => const LoginScreen(),
                     ),
                   );
                 },
               ),
-              // const Padding(
-              //   padding: EdgeInsets.all(14.0),
-              //   child: Text("Labels"),
-              // ),
-              // ListTile(
-              //   leading: const Icon(Icons.label),
-              //   title: const Text("Red"),
-              //   onTap: () {},
-              // ),
-              // ListTile(
-              //   leading: const Icon(Icons.label),
-              //   title: const Text("Blue"),
-              //   onTap: () {},
-              // ),
-              // ListTile(
-              //   leading: const Icon(Icons.label),
-              //   title: const Text("Green"),
-              //   onTap: () {},
-              // ),
             ],
           )),
       body: ListView.builder(
