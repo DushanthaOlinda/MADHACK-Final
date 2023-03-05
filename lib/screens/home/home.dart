@@ -125,7 +125,7 @@ class _HomeState extends State<Home2> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const Home2(),
+                      builder: (context) => Home2(),
                     ),
                   );
                 },
@@ -155,7 +155,7 @@ class _HomeState extends State<Home2> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const LoginScreen(),
+                      builder: (context) => LoginScreen(),
                     ),
                   );
                 },

@@ -81,14 +81,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.17.0"
-  convert:
-    dependency: transitive
-    description:
-      name: convert
-      sha256: "3fa83bc417e26f1d55814443a603747d48e3cdf55b2f4fea27dea8e9224dcefd"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.1.1"
   cross_file:
     dependency: transitive
     description:
@@ -519,4 +511,4 @@ packages:
     version: "6.2.2"
 sdks:
   dart: ">=2.19.3 <3.0.0"
-  flutter: ">=3.3.0"
+  flutter: ">=3.7.0-0"

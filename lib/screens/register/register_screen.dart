@@ -26,26 +26,25 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    Size size = MediaQuery
+        .of(context)
+        .size;
 
     return Scaffold(
-      resizeToAvoidBottomInset: false,
-      body: SingleChildScrollView(
-        child: Background(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Container(
-                alignment: Alignment.centerLeft,
-                padding: const EdgeInsets.symmetric(horizontal: 40),
-                child: const Text(
-                  "REGISTER",
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Colors.blue,
-                      fontSize: 36),
-                  textAlign: TextAlign.left,
-                ),
+      body: Background(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Container(
+              alignment: Alignment.centerLeft,
+              padding: const EdgeInsets.symmetric(horizontal: 40),
+              child: const Text(
+                "REGISTER",
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.blue,
+                    fontSize: 36),
+                textAlign: TextAlign.left,
               ),
             ),
             SizedBox(height: size.height * 0.03),
@@ -120,7 +119,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         if (value!.isEmpty) {
                           return "password required";
                         } else if (!RegExp(
-                                r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$')
+                            r'^(?=.?[A-Z])(?=.?[a-z])(?=.*?[0-9]).{8,}$')
                             .hasMatch(value!)) {
                           return "Password must be 8 characters long and should contain at least one uppercase letter, lowercase letter and one digit";
                         } else {
@@ -129,26 +128,36 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         }
                       },
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-              SizedBox(height: size.height * 0.05),
-              Container(
-                alignment: Alignment.center,
-                margin: const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
-                child: ElevatedButton(
-                  onPressed: () async {
-                    final isValid = registerFormKey.currentState!.validate();
-                    bool isValidUser = false;
+            ),
+            SizedBox(height: size.height * 0.05),
+            Container(
+              alignment: Alignment.center,
+              margin: const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
+              child: ElevatedButton(
+                onPressed: () async {
+                  final isValid = registerFormKey.currentState!.validate();
+                  bool isValidUser = false;
 
-                    if (!isValid) {
-                      return;
-                    }
+                  if (!isValid) {
+                    return;
+                  }
+
+                  showDialog(
+                    context: context,
+                    barrierDismissible: false,
+                    builder: (context) =>
+                    const Center(
+                      child: CircularProgressIndicator(),
+                    ),
+                  );
 
                   try {
                     // register user in auth
                     UserCredential newUser =
-                        await _auth.createUserWithEmailAndPassword(
+                    await _auth.createUserWithEmailAndPassword(
                       email: widget.email,
                       password: widget.password,
                     );
@@ -157,7 +166,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       // add user to firestore
 
                       //document reference
-                      final CollectionReference users = FirebaseFirestore.instance.collection('users');
+                      final CollectionReference users = FirebaseFirestore
+                          .instance.collection('users');
                       final userDoc = users.doc(newUser.user?.uid);
 
                       final user = {
@@ -182,7 +192,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     navigatorKey.currentState!
                         .popUntil((route) => route.isCurrent);
                     print(e);
-                    if(e.code == "email-already-in-use"){
+                    if (e.code == "email-already-in-use") {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
                           content: const Text(
@@ -200,63 +210,63 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     }
                   }
 
-                    if (isValidUser == true) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: const Text('Registration Successful!'),
-                          backgroundColor: Colors.green,
-                          duration: const Duration(seconds: 2),
-                          action: SnackBarAction(
-                            label: '',
-                            onPressed: () {
-                              // Some code to undo the change.
-                            },
-                          ),
+                  if (isValidUser == true) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: const Text('Registration Successful!'),
+                        backgroundColor: Colors.green,
+                        duration: const Duration(seconds: 2),
+                        action: SnackBarAction(
+                          label: '',
+                          onPressed: () {
+                            // Some code to undo the change.
+                          },
                         ),
-                      );
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => LoginScreen(),
-                        ),
-                      );
-                    }
-                  },
-                  style: ElevatedButton.styleFrom(
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(80.0)),
-                      backgroundColor: Colors.blue,
-                      padding: const EdgeInsets.all(0),
-                      textStyle: const TextStyle(fontWeight: FontWeight.bold),
-                      minimumSize: Size(size.width * 0.5, 50.0)),
-                  child: const Text(
-                    "SIGN UP",
-                    style: TextStyle(
-                      fontSize: 20,
-                    ),
-                    textAlign: TextAlign.center,
+                      ),
+                    );
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => LoginScreen(),
+                      ),
+                    );
+                  }
+                },
+                style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(80.0)),
+                    backgroundColor: Colors.blue,
+                    padding: const EdgeInsets.all(0),
+                    textStyle: const TextStyle(fontWeight: FontWeight.bold),
+                    minimumSize: Size(size.width * 0.5, 50.0)),
+                child: const Text(
+                  "SIGN UP",
+                  style: TextStyle(
+                    fontSize: 20,
                   ),
+                  textAlign: TextAlign.center,
                 ),
               ),
-              Container(
-                alignment: Alignment.centerRight,
-                margin: const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
-                child: GestureDetector(
-                  onTap: () => {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => LoginScreen()))
-                  },
-                  child: const Text(
-                    "Already Have an Account? Sign in",
-                    style: TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.bold,
-                        color: Color(0xFF2661FA)),
-                  ),
+            ),
+            Container(
+              alignment: Alignment.centerRight,
+              margin: const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
+              child: GestureDetector(
+                onTap: () =>
+                {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => LoginScreen()))
+                },
+                child: const Text(
+                  "Already Have an Account? Sign in",
+                  style: TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.bold,
+                      color: Color(0xFF2661FA)),
                 ),
-              )
-            ],
-          ),
+              ),
+            )
+          ],
         ),
       ),
     );
