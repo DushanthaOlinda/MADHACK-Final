@@ -69,6 +69,7 @@ class _HomeState extends State<Home2> {
         foregroundColor: Colors.white,
         backgroundColor: Colors.blue,
         elevation: 2,
+
         // shape: BeveledRectangleBorder(
         //   borderRadius: BorderRadius.circular(20.0),
         //   side: const BorderSide(color: Colors.blue, width: 2.0,style: BorderStyle.solid),

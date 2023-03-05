@@ -6,7 +6,9 @@ import 'package:madhack_finals/constants.dart';
 import 'package:madhack_finals/main.dart';
 import 'package:madhack_finals/screens/home/admin_home.dart';
 import 'package:madhack_finals/screens/login/components/background.dart';
+import 'package:madhack_finals/video_player.dart';
 import 'package:madhack_finals/screens/register/register_screen.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../home/home.dart';
 
